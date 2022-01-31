@@ -32,11 +32,79 @@ body {
     padding: 0.4rem 1rem;
 }
 
+
+
+/* Checkbox style -- start */
+
+/* The container */
+.Card--checkbox_container {
+  display: block;
+  position: relative;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
 .Card--checkbox {
-    margin: 20px;
-    height: 25px;
-    width: 25px;
-  }
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.Card--checkbox_checkmark {
+  position: absolute;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.Card--checkbox_container:hover input ~ .Card--checkbox_checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a background */
+.Card--checkbox:checked ~ .Card--checkbox_checkmark {
+  background-color: #ff9900;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.Card--checkbox_checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.Card--checkbox:checked ~ .Card--checkbox_checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.Card--checkbox_container .Card--checkbox_checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Checkbox style -- end */
 
 .Card--text {
     margin-left: 15px;
