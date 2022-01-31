@@ -48,12 +48,9 @@ export const updateTodo = async (
     todo: ITodo
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
-        const todoUpdate: Pick<ITodo, "status"> = {
-            status: !todo.status,
-        }
         const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
             `${baseUrl}/edit-todo/${todo._id}`,
-            todoUpdate
+            todo
         )
         return updatedTodo
     } catch (e) {

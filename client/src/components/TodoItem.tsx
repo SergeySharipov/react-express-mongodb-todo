@@ -10,14 +10,21 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
   return (
     <div className="Card">
       <div className="Card--checkbox_container"
-        onClick={() => updateTodo(todo)}>
+        onClick={() => {
+          const updatedTodo: ITodo = {
+            ...todo,
+            status: !todo.status,
+          }
+          updateTodo(updatedTodo)
+        }
+        }>
         <input
           className="Card--checkbox"
           type="checkbox"
           readOnly
           checked={todo.status}
         />
-        <span className="Card--checkbox_checkmark"/>
+        <span className="Card--checkbox_checkmark" />
       </div>
       <div className="Card--text">
         <h2 className={checkTodo}>{todo.name}</h2>
