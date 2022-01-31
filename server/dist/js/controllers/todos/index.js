@@ -16,7 +16,7 @@ exports.deleteTodo = exports.updateTodo = exports.addTodo = exports.getTodos = v
 const todo_1 = __importDefault(require("../../models/todo"));
 const getTodos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const todos = yield todo_1.default.find();
+        const todos = yield todo_1.default.find().sort({ status: 1, updatedAt: -1, createdAt: -1 });
         res.status(200).json({ todos });
     }
     catch (error) {
@@ -33,7 +33,7 @@ const addTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             status: body.status,
         });
         const newTodo = yield todo.save();
-        const allTodos = yield todo_1.default.find();
+        const allTodos = yield todo_1.default.find().sort({ status: 1, updatedAt: -1, createdAt: -1 });
         res
             .status(201)
             .json({ message: "Todo added", todo: newTodo, todos: allTodos });
@@ -47,7 +47,7 @@ const updateTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { params: { id }, body, } = req;
         const updateTodo = yield todo_1.default.findByIdAndUpdate({ _id: id }, body);
-        const allTodos = yield todo_1.default.find();
+        const allTodos = yield todo_1.default.find().sort({ status: 1, updatedAt: -1, createdAt: -1 });
         res.status(200).json({
             message: "Todo updated",
             todo: updateTodo,
@@ -62,7 +62,7 @@ exports.updateTodo = updateTodo;
 const deleteTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const deletedTodo = yield todo_1.default.findByIdAndRemove(req.params.id);
-        const allTodos = yield todo_1.default.find();
+        const allTodos = yield todo_1.default.find().sort({ status: 1, updatedAt: -1, createdAt: -1 });
         res.status(200).json({
             message: "Todo deleted",
             todo: deletedTodo,

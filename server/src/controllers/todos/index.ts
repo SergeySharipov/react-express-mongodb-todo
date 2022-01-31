@@ -4,7 +4,7 @@ import Todo from "../../models/todo"
 
 const getTodos = async (req: Request, res: Response): Promise<void> => {
   try {
-    const todos: ITodo[] = await Todo.find()
+    const todos: ITodo[] = await Todo.find().sort({ status: 1, updatedAt: -1, createdAt: -1 })
     res.status(200).json({ todos })
   } catch (error) {
     throw error
@@ -22,7 +22,7 @@ const addTodo = async (req: Request, res: Response): Promise<void> => {
     })
 
     const newTodo: ITodo = await todo.save()
-    const allTodos: ITodo[] = await Todo.find()
+    const allTodos: ITodo[] = await Todo.find().sort({ status: 1, updatedAt: -1, createdAt: -1 })
 
     res
       .status(201)
@@ -42,7 +42,7 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
       { _id: id },
       body
     )
-    const allTodos: ITodo[] = await Todo.find()
+    const allTodos: ITodo[] = await Todo.find().sort({ status: 1, updatedAt: -1, createdAt: -1 })
     res.status(200).json({
       message: "Todo updated",
       todo: updateTodo,
@@ -58,7 +58,7 @@ const deleteTodo = async (req: Request, res: Response): Promise<void> => {
     const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(
       req.params.id
     )
-    const allTodos: ITodo[] = await Todo.find()
+    const allTodos: ITodo[] = await Todo.find().sort({ status: 1, updatedAt: -1, createdAt: -1 })
     res.status(200).json({
       message: "Todo deleted",
       todo: deletedTodo,
