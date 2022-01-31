@@ -9,17 +9,16 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
   const checkTodo: string = todo.status ? `line-through` : ""
   return (
     <div className="Card">
+      <input className="Card--checkbox"
+        type="checkbox"
+        checked={todo.status}
+        onChange={() => updateTodo(todo)}
+      />
       <div className="Card--text">
-        <h1 className={checkTodo}>{todo.name}</h1>
+        <h2 className={checkTodo}>{todo.name}</h2>
         <span className={checkTodo}>{todo.description}</span>
       </div>
       <div className="Card--button">
-        <button
-          onClick={() => updateTodo(todo)}
-          className={todo.status ? `hide-button` : "Card--button__done"}
-        >
-          Complete
-        </button>
         <button
           onClick={() => deleteTodo(todo._id)}
           className="Card--button__delete"

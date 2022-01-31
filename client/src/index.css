@@ -25,14 +25,25 @@ body {
 
 .Card {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background: #444;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid #333333;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 0.4rem 1rem;
 }
 
-.Card--text h1 {
+.Card--checkbox {
+    margin: 20px;
+    height: 25px;
+    width: 25px;
+  }
+
+.Card--text {
+    margin-left: 15px;
+    margin-right: auto;
+}
+
+.Card--text h2 {
     color: #ff9900;
 }
 
@@ -46,6 +57,7 @@ body {
 .Card--button__delete {
     border: 1px solid #ca0000;
     color: #ca0000;
+    margin-left: auto;
 }
 
 .Card--button__done {
@@ -59,6 +71,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    border-radius: 10px;
     background: #444;
     margin-bottom: 1rem;
 }
@@ -76,9 +89,6 @@ body {
     border-radius: 10px;
     display: block;
     margin: 0.3rem 1rem 0 0;
-}
-
-.Form label {
 }
 
 .Form button {
