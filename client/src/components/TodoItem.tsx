@@ -3,9 +3,10 @@ import React from "react"
 type Props = TodoProps & {
   updateTodo: (todo: ITodo) => void
   deleteTodo: (_id: string) => void
+  openEditDialog: (_id: string) => void
 }
 
-const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
+const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, openEditDialog }) => {
   const checkTodo: string = todo.status ? `line-through` : ""
   return (
     <div className="Card">
@@ -26,7 +27,7 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
         />
         <span className="Card--checkbox_checkmark" />
       </div>
-      <div className="Card--text">
+      <div className="Card--text" onClick={() => openEditDialog(todo._id)}>
         <h2 className={checkTodo}>{todo.name}</h2>
         <span className={checkTodo}>{todo.description}</span>
       </div>

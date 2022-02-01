@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import TodoItem from './components/TodoItem'
 import AddTodo from './components/AddTodo'
+import UpdateTodoDialog from './components/UpdateTodoDialog'
 import { getTodos, addTodo, updateTodo, deleteTodo } from './API'
+
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodo[]>([])
+  const [editTodoId, setEditTodoId] = useState("");
 
   useEffect(() => {
     fetchTodos()
@@ -29,6 +32,8 @@ const App: React.FC = () => {
   }
 
   const handleUpdateTodo = (todo: ITodo): void => {
+    cancelEditDialog()
+
     updateTodo(todo)
       .then(({ status, data }) => {
         if (status !== 200) {
@@ -50,6 +55,16 @@ const App: React.FC = () => {
       .catch((err) => console.log(err))
   }
 
+  function handleOpenEditDialog(_id: string) {
+    setEditTodoId(_id);
+  }
+
+  function cancelEditDialog() {
+    if (editTodoId !== "") {
+      setEditTodoId("")
+    }
+  }
+
   return (
     <main className='App'>
       <h1>My Todos</h1>
@@ -59,9 +74,19 @@ const App: React.FC = () => {
           key={todo._id}
           updateTodo={handleUpdateTodo}
           deleteTodo={handleDeleteTodo}
+          openEditDialog={handleOpenEditDialog}
           todo={todo}
         />
       ))}
+      <UpdateTodoDialog
+        todo={
+          editTodoId !== ""
+            ? todos.find(todo => todo._id === editTodoId)
+            : undefined
+        }
+        updateTodo={handleUpdateTodo}
+        cancelEditDialog={cancelEditDialog}
+      />
     </main>
   )
 }
