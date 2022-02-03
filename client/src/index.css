@@ -3,7 +3,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 body {
     font-family: 'Nunito', sans-serif;
@@ -13,9 +12,9 @@ body {
     background: #333;
 }
 
-.App {
+.container {
+    min-width: 300px;
     max-width: 728px;
-    margin: 4rem auto;
 }
 
 .todoApp > h1 {
@@ -97,8 +96,8 @@ body {
 /* Style the checkmark/indicator */
 .Card--checkbox_container .Card--checkbox_checkmark:after {
   left: 9px;
-  top: 5px;
-  width: 5px;
+  top: 6px;
+  width: 8px;
   height: 10px;
   border: solid white;
   border-width: 0 3px 3px 0;
@@ -138,22 +137,23 @@ body {
 }
 
 .Form {
+    color: #fff;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
     border-radius: 10px;
     background: #444;
     margin-bottom: 1rem;
 }
 
 .Form > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  flex-grow: 4;
+  margin: 15px;
 }
 
 .Form input {
+  width: 100%;
     background: #f5f6f7;
     padding: 0.5rem 1rem;
     border: 1px solid #ff9900;
@@ -163,6 +163,8 @@ body {
 }
 
 .Form button {
+  flex-grow: 1;
+    margin: 15px;
     background: #ff9900;
     color: #fff;
     padding: 0.5rem 1rem;
