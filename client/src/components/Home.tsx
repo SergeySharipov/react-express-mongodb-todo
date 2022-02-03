@@ -14,23 +14,22 @@ const Home: React.FC = () => {
   useEffect(() => {
     const user = getCurrentUser()
     if (user) {
-      setCurrentUserId(getCurrentUser().id)
+      setCurrentUserId(user.id)
     }
   }, [])
 
   useEffect(() => {
+    function fetchTodos() {
+      if (currentUserId) {
+        getTodos(currentUserId)
+          .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
+          .catch((err: Error) => console.log(err))
+      }
+    }
     if (currentUserId !== null) {
       fetchTodos()
     }
   }, [currentUserId])
-
-  const fetchTodos = (): void => {
-    if (currentUserId) {
-      getTodos(currentUserId)
-        .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
-        .catch((err: Error) => console.log(err))
-    }
-  }
 
   const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
     e.preventDefault()
