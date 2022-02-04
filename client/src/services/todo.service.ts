@@ -88,3 +88,22 @@ export const deleteTodo = async (
         }
     }
 }
+
+export const deleteAllTodos = async (
+    currentUserId: string,
+): Promise<AxiosResponse<ApiDataType>> => {
+    try {
+        const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
+            `${baseUrl}/${currentUserId}/delete-all-todos/`
+            , { headers: authHeader() });
+        return deletedTodo
+    } catch (e) {
+        if (e instanceof TypeError) {
+            throw e
+        } else if (typeof e === "string" || typeof e === "undefined") {
+            throw new Error(e)
+        } else {
+            throw new Error("Error: deleteTodo()")
+        }
+    }
+}

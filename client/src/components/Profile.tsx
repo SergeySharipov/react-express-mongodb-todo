@@ -1,31 +1,38 @@
 import React from "react";
 import { getCurrentUser } from "../services/auth.service";
+import { deleteAllTodos } from '../services/todo.service'
 
 const Profile: React.FC = () => {
   const currentUser = getCurrentUser();
 
+  const handleDeleteTodos = (): void => {
+    if (currentUser.id) {
+      deleteAllTodos(currentUser.id)
+        .then(({ status, data }) => {
+          if (status !== 200) {
+            throw new Error('Error! Todos are not deleted')
+          }
+        })
+        .catch((err) => console.log(err))
+    }
+  }
+
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>
-          <strong>{currentUser.username}</strong> Profile
-        </h3>
-      </header>
-      <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-      </p>
-      <p>
-        <strong>Id:</strong> {currentUser.id}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
-      <strong>Authorities:</strong>
-      <ul>
-        {currentUser.roles &&
-          currentUser.roles.map((role: string, index: number) => <li key={index}>{role}</li>)}
-      </ul>
+    <div className="col-md-12">
+      <div className="card card-container">
+        <h1>
+          Profile
+        </h1>
+        <p>
+          <strong>Username:</strong> {currentUser.username}
+        </p>
+        <p>
+          <strong>Email:</strong> {currentUser.email}
+        </p>
+        <button className="btn btn-danger btn-block" onClick={handleDeleteTodos}>
+          <span>Delete All Todos</span>
+        </button>
+      </div>
     </div>
   );
 };
