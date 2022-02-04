@@ -77,4 +77,19 @@ const deleteTodo = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
-export { getTodos, addTodo, updateTodo, deleteTodo }
+const deleteAllTodos = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const deletedTodo: ITodo | null = await Todo.remove(
+            { creator: req.params.creator }
+        )
+        const allTodos: ITodo[] = await Todo.find({ creator: req.params.creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
+        res.status(200).json({
+            message: "All Todos deleted",
+            todos: allTodos,
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
+export { getTodos, addTodo, updateTodo, deleteTodo, deleteAllTodos }

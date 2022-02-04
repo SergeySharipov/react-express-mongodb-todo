@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTodo = exports.updateTodo = exports.addTodo = exports.getTodos = void 0;
+exports.deleteAllTodos = exports.deleteTodo = exports.updateTodo = exports.addTodo = exports.getTodos = void 0;
 const todo_1 = __importDefault(require("../models/todo"));
 const getTodos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -78,3 +78,17 @@ const deleteTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteTodo = deleteTodo;
+const deleteAllTodos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const deletedTodo = yield todo_1.default.remove({ creator: req.params.creator });
+        const allTodos = yield todo_1.default.find({ creator: req.params.creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 });
+        res.status(200).json({
+            message: "All Todos deleted",
+            todos: allTodos,
+        });
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.deleteAllTodos = deleteAllTodos;

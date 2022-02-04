@@ -12,4 +12,5 @@ router.get("/:creator/todos", [middlewares_1.authJwt.verifyToken], todo_controll
 router.post("/:creator/add-todo", [middlewares_1.authJwt.verifyToken], todo_controller_1.addTodo);
 router.put("/:creator/edit-todo/:id", [middlewares_1.authJwt.verifyToken], todo_controller_1.updateTodo);
 router.delete("/:creator/delete-todo/:id", [middlewares_1.authJwt.verifyToken], todo_controller_1.deleteTodo);
+router.delete("/:creator/delete-all-todos", [middlewares_1.authJwt.verifyToken], todo_controller_1.deleteAllTodos);
 exports.default = router;
