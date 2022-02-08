@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
+    "start": "node dist/app.js",
+    "heroku-postbuild": "tsc && cd client && npm install && npm run build && cd .. && mv client/build/ dist/build",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/app.js\" \"cd client && npm start\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

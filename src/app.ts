@@ -2,13 +2,18 @@ import express, { Express } from "express"
 import cors from "cors"
 import routes from "./routes"
 import db from "./models/index"
+import path from "path"
 
 const app: Express = express()
 
 const PORT: string | number = process.env.PORT || 8080
 
+const production = 'https://react-todo-list-js.herokuapp.com';
+const development = 'http://localhost:3000';
+const url = process.env.NODE_ENV === "production" ? production : development;
+
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: url
 };
 
 app.use(cors(corsOptions));
@@ -22,6 +27,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(routes.authRoutes)
 app.use(routes.userRoutes)
 app.use(routes.todoRoutes)
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'build')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'));
+});
 
 const uri: string = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@todo.yalci.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 

@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from "axios"
 import authHeader from "./auth-header";
 
-const baseUrl: string = "http://localhost:8080"
+const production = 'https://react-todo-list-js.herokuapp.com';
+const development = 'http://localhost:8080';
+const baseUrl = process.env.NODE_ENV === "production"  ? production : development;
 
 export const getTodos = async (
     currentUserId: string
