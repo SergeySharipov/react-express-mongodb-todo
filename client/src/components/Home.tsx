@@ -31,19 +31,19 @@ const Home: React.FC = () => {
     }
   }, [currentUserId])
 
-  const handleSaveTodo = (e: React.FormEvent, formData: ITodo): void => {
-    e.preventDefault()
-    if (currentUserId) {
-      addTodo(currentUserId, formData)
-        .then(({ status, data }) => {
-          if (status !== 201) {
-            throw new Error('Error! Todo not saved')
-          }
-          setTodos(data.todos)
-        })
-        .catch((err) => console.log(err))
+  const handleSaveTodo
+    = (formData: AddTodoFormData): void => {
+      if (currentUserId) {
+        addTodo(currentUserId, formData)
+          .then(({ status, data }) => {
+            if (status !== 201) {
+              throw new Error('Error! Todo not saved')
+            }
+            setTodos(data.todos)
+          })
+          .catch((err) => console.log(err))
+      }
     }
-  }
 
   const handleUpdateTodo = (todo: ITodo): void => {
     cancelEditDialog()

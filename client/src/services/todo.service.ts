@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 
 const production = 'https://react-todo-list-js.herokuapp.com';
 const development = 'http://localhost:8080';
-const baseUrl = process.env.NODE_ENV === "production"  ? production : development;
+const baseUrl = process.env.NODE_ENV === "production" ? production : development;
 
 export const getTodos = async (
     currentUserId: string
@@ -25,7 +25,7 @@ export const getTodos = async (
 
 export const addTodo = async (
     currentUserId: string,
-    formData: ITodo
+    formData: AddTodoFormData
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const todo: Omit<ITodo, "_id"> = {

@@ -2,10 +2,15 @@ interface ITodo {
   _id: string
   creator: string
   name: string
-  description: string
+  description?: string
   status: boolean
   createdAt?: string
   updatedAt?: string
+}
+
+interface AddTodoFormData {
+  name: string
+  description: string
 }
 
 interface TodoProps {

@@ -24,8 +24,21 @@ const UpdateTodoDialog: React.FC<Props> = ({ todo, updateTodo, cancelEditDialog 
     })
   }
 
+  const handleSubmit = (e: React.FormEvent<Element>): void => {
+    e.preventDefault()
+    if (instanceOfITodo(formData) && !isBlank(formData.name)) {
+      updateTodo(formData as ITodo)
+    } else {
+      alert("Name can not be empty!")
+    }
+  }
+
   function instanceOfITodo(object: any): object is ITodo {
     return object !== undefined && '_id' in object;
+  }
+
+  function isBlank(str: string) {
+    return !str || str.length === 0 || !str.trim();
   }
 
   return (
@@ -35,11 +48,7 @@ const UpdateTodoDialog: React.FC<Props> = ({ todo, updateTodo, cancelEditDialog 
       className="mymodal"
       onRequestClose={cancelEditDialog}
       overlayClassName="myoverlay">
-      <form className='Form' onSubmit={(e) => {
-        e.preventDefault()
-        if (instanceOfITodo(formData)) { updateTodo(formData as ITodo) }
-      }
-      }>
+      <form className='Form' onSubmit={handleSubmit}>
         <div>
           <div>
             <label htmlFor='name'>Name</label>
