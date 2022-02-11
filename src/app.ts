@@ -10,20 +10,23 @@ const PORT: string | number = process.env.PORT || 8080
 
 const production = 'https://react-todo-list-js.herokuapp.com';
 const development = 'http://localhost:3000';
-const url = process.env.NODE_ENV === "production" ? production : development;
+const isProduction = process.env.NODE_ENV === "production"
+const url = isProduction ? production : development;
 
-app.use(function(req, res, next) {
-  var schema = req.headers['x-forwarded-proto'];
+if (isProduction) {
+  app.use(function (req, res, next) {
+    var schema = req.headers['x-forwarded-proto'];
 
-  if (schema === 'https') {
-    // Already https; don't do anything special.
-    next();
-  }
-  else {
-    // Redirect to https.
-    res.redirect('https://' + req.headers.host + req.url);
-  }
-});
+    if (schema === 'https') {
+      // Already https; don't do anything special.
+      next();
+    }
+    else {
+      // Redirect to https.
+      res.redirect('https://' + req.headers.host + req.url);
+    }
+  });
+}
 
 var corsOptions = {
   origin: url
