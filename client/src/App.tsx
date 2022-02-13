@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
     if (user) {
       setCurrentUser(user);
-    }
+    } 
 
     EventBus.on("logout", logOut);
 

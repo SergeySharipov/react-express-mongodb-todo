@@ -1,9 +1,24 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosResponse, AxiosError } from "axios"
 import authHeader from "./auth-header";
+import * as AuthService from "./auth.service";
 
 const production = 'https://react-todo-list-js.herokuapp.com';
 const development = 'http://localhost:8080';
 const baseUrl = process.env.NODE_ENV === "production" ? production : development;
+
+const logOut = () => {
+    AuthService.logout();
+    window.location.reload();
+};
+
+const catchUnauthorizedError = (e: unknown) => {
+    if ((e as AxiosError).response) {
+        if ((e as AxiosError).response?.status === 401) {
+            alert("Session token expired. Please log in.")
+            logOut()
+        }
+    }
+};
 
 export const getTodos = async (
     currentUserId: string
@@ -13,13 +28,8 @@ export const getTodos = async (
             `${baseUrl}/${currentUserId}/todos`, { headers: authHeader() });
         return todos
     } catch (e) {
-        if (e instanceof TypeError) {
-            throw e
-        } else if (typeof e === "string" || typeof e === "undefined") {
-            throw new Error(e)
-        } else {
-            throw new Error("Error: getTodos()")
-        }
+        catchUnauthorizedError(e)
+        throw e
     }
 }
 
@@ -40,13 +50,8 @@ export const addTodo = async (
             , { headers: authHeader() });
         return saveTodo
     } catch (e) {
-        if (e instanceof TypeError) {
-            throw e
-        } else if (typeof e === "string" || typeof e === "undefined") {
-            throw new Error(e)
-        } else {
-            throw new Error("Error: addTodo()")
-        }
+        catchUnauthorizedError(e)
+        throw e
     }
 }
 
@@ -61,13 +66,8 @@ export const updateTodo = async (
             , { headers: authHeader() });
         return updatedTodo
     } catch (e) {
-        if (e instanceof TypeError) {
-            throw e
-        } else if (typeof e === "string" || typeof e === "undefined") {
-            throw new Error(e)
-        } else {
-            throw new Error("Error: updateTodo()")
-        }
+        catchUnauthorizedError(e)
+        throw e
     }
 }
 
@@ -81,13 +81,8 @@ export const deleteTodo = async (
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {
-        if (e instanceof TypeError) {
-            throw e
-        } else if (typeof e === "string" || typeof e === "undefined") {
-            throw new Error(e)
-        } else {
-            throw new Error("Error: deleteTodo()")
-        }
+        catchUnauthorizedError(e)
+        throw e
     }
 }
 
@@ -100,12 +95,7 @@ export const deleteAllTodos = async (
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {
-        if (e instanceof TypeError) {
-            throw e
-        } else if (typeof e === "string" || typeof e === "undefined") {
-            throw new Error(e)
-        } else {
-            throw new Error("Error: deleteTodo()")
-        }
+        catchUnauthorizedError(e)
+        throw e
     }
 }

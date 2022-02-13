@@ -1,9 +1,20 @@
 import React from "react";
 import { getCurrentUser } from "../services/auth.service";
 import { deleteAllTodos } from '../services/todo.service'
+import { RouteComponentProps } from "react-router-dom";
 
-const Profile: React.FC = () => {
+interface RouterProps {
+  history: string;
+}
+
+type Props = RouteComponentProps<RouterProps>;
+
+const Profile: React.FC<Props> = ({ history }) => {
   const currentUser = getCurrentUser();
+  if (!currentUser) {
+    history.push("/login");
+    window.location.reload();
+  }
 
   const handleDeleteTodos = (): void => {
     if (currentUser.id) {
