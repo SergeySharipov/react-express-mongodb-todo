@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Router } from "express"
-import { authJwt } from "../middlewares";
+import { authJwt } from "../middlewares/"
 import { getTodos, addTodo, updateTodo, deleteTodo, deleteAllTodos } from "../controllers/todo.controller"
 
 const router: Router = Router()

@@ -8,14 +8,6 @@ const userBoard = (req: Request, res: Response) => {
     res.status(200).send("User Content.");
 };
 
-const adminBoard = (req: Request, res: Response) => {
-    res.status(200).send("Admin Content.");
-};
-
-const moderatorBoard = (req: Request, res: Response) => {
-    res.status(200).send("Moderator Content.");
-};
-
-const controller = { allAccess, userBoard, adminBoard, moderatorBoard }
+const controller = { allAccess, userBoard }
 
 export default controller

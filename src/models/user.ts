@@ -15,12 +15,6 @@ const userSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    roles: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "role"
-      }
-    ]
   },
   { timestamps: true }
 )

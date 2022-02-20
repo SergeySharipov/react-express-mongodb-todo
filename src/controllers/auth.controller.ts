@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import config from "../config/auth.config";
 import db from "../models";
-import { IRole, IUser } from '../types/types';
+import { IUser } from '../types/types';
 import Jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 const User = db.user;
-const Role = db.role;
 
 const signup = (req: Request, res: Response) => {
     const user = new User({
@@ -18,49 +17,9 @@ const signup = (req: Request, res: Response) => {
     user.save((err, user: IUser) => {
         if (err) {
             res.status(500).send({ message: err.message });
-            return;
         }
 
-        if (req.body.roles) {
-            Role.find(
-                {
-                    name: { $in: req.body.roles }
-                },
-                (err, roles: [IRole]) => {
-                    if (err) {
-                        res.status(500).send({ message: err.message });
-                        return;
-                    }
-
-                    user.roles = roles.map(role => role._id);
-                    user.save(err => {
-                        if (err) {
-                            res.status(500).send({ message: err.message });
-                            return;
-                        }
-
-                        res.send({ message: "User was registered successfully!" });
-                    });
-                }
-            );
-        } else {
-            Role.findOne({ name: "user" }, (err: Error, role: IRole) => {
-                if (err) {
-                    res.status(500).send({ message: err.message });
-                    return;
-                }
-
-                user.roles = [role._id];
-                user.save(err => {
-                    if (err) {
-                        res.status(500).send({ message: err.message });
-                        return;
-                    }
-
-                    res.send({ message: "User was registered successfully!" });
-                });
-            });
-        }
+        res.send({ message: "User was registered successfully!" });
     });
 };
 
@@ -68,7 +27,6 @@ const signin = (req: Request, res: Response) => {
     User.findOne({
         username: req.body.username
     })
-        .populate("roles", "-__v")
         .exec((err, user) => {
             if (err) {
                 res.status(500).send({ message: err.message });
@@ -95,16 +53,10 @@ const signin = (req: Request, res: Response) => {
                 expiresIn: 31556952 // 1 year
             });
 
-            var authorities = [];
-
-            for (let i = 0; i < user.roles.length; i++) {
-                authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
-            }
             res.status(200).send({
                 id: user._id,
                 username: user.username,
                 email: user.email,
-                roles: authorities,
                 accessToken: token
             });
         });
