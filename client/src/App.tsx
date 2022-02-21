@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-import EventBus from "./common/EventBus";
+import EventBus from "./utills/EventBus";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);

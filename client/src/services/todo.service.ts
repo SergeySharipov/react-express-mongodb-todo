@@ -1,10 +1,7 @@
 import axios, { AxiosResponse, AxiosError } from "axios"
 import authHeader from "./auth-header";
 import * as AuthService from "./auth.service";
-
-const production = 'https://react-todo-list-js.herokuapp.com';
-const development = 'http://localhost:8080';
-const baseUrl = process.env.NODE_ENV === "production" ? production : development;
+import API_URL from '../utills/config'
 
 const logOut = () => {
     AuthService.logout();
@@ -25,7 +22,7 @@ export const getTodos = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const todos: AxiosResponse<ApiDataType> = await axios.get(
-            `${baseUrl}/user/${currentUserId}/todos`, { headers: authHeader() });
+            `${API_URL}/user/${currentUserId}/todos`, { headers: authHeader() });
         return todos
     } catch (e) {
         catchUnauthorizedError(e)
@@ -45,7 +42,7 @@ export const addTodo = async (
             creator: currentUserId
         }
         const saveTodo: AxiosResponse<ApiDataType> = await axios.post(
-            `${baseUrl}/user/${currentUserId}/todo`,
+            `${API_URL}/user/${currentUserId}/todo`,
             todo
             , { headers: authHeader() });
         return saveTodo
@@ -61,7 +58,7 @@ export const updateTodo = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
-            `${baseUrl}/user/${currentUserId}/todo/${todo.id}`,
+            `${API_URL}/user/${currentUserId}/todo/${todo.id}`,
             todo
             , { headers: authHeader() });
         return updatedTodo
@@ -73,11 +70,11 @@ export const updateTodo = async (
 
 export const deleteTodo = async (
     currentUserId: string,
-    id: string
+    todoId: string
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-            `${baseUrl}/user/${currentUserId}/todo/${id}`
+            `${API_URL}/user/${currentUserId}/todo/${todoId}`
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {
@@ -91,7 +88,7 @@ export const deleteAllTodos = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-            `${baseUrl}/user/${currentUserId}/todos/`
+            `${API_URL}/user/${currentUserId}/todos/`
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {

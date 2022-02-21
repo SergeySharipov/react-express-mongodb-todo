@@ -1,11 +1,8 @@
 import axios from "axios";
-
-const production = 'https://react-todo-list-js.herokuapp.com/api/auth/';
-const development = 'http://localhost:8080/api/auth/';
-const API_URL = process.env.NODE_ENV === "production"  ? production : development;
+import API_URL from '../utills/config'
 
 export const register = (username: string, email: string, password: string) => {
-  return axios.post(API_URL + "signup", {
+  return axios.post(API_URL + "/api/auth/signup", {
     username,
     email,
     password,
@@ -14,7 +11,7 @@ export const register = (username: string, email: string, password: string) => {
 
 export const login = (username: string, password: string) => {
   return axios
-    .post(API_URL + "signin", {
+    .post(API_URL + "/api/auth/signin", {
       username,
       password,
     })
