@@ -13,14 +13,14 @@ router.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
-router.get("/:creator/todos", [authJwt.verifyToken], getTodos)
+router.get("/user/:userId/todos", [authJwt.verifyToken], getTodos)
 
-router.post("/:creator/add-todo", [authJwt.verifyToken], addTodo)
+router.post("/user/:userId/todo", [authJwt.verifyToken], addTodo)
 
-router.put("/:creator/edit-todo/:id", [authJwt.verifyToken], updateTodo)
+router.put("/user/:userId/todo/:todoId", [authJwt.verifyToken], updateTodo)
 
-router.delete("/:creator/delete-todo/:id", [authJwt.verifyToken], deleteTodo)
+router.delete("/user/:userId/todo/:todoId", [authJwt.verifyToken], deleteTodo)
 
-router.delete("/:creator/delete-all-todos", [authJwt.verifyToken], deleteAllTodos)
+router.delete("/user/:userId/todos", [authJwt.verifyToken], deleteAllTodos)
 
 export default router

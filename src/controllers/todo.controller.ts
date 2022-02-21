@@ -5,11 +5,11 @@ import Todo from "../models/todo"
 const getTodos = async (req: Request, res: Response): Promise<void> => {
     try {
         const {
-            params: { creator },
+            params: { userId },
             body,
         } = req
 
-        const todos: ITodo[] = await Todo.find({ creator: creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
+        const todos: ITodo[] = await Todo.find({ creator: userId }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
         res.status(200).json({ todos })
     } catch (error) {
         throw error
@@ -28,7 +28,7 @@ const addTodo = async (req: Request, res: Response): Promise<void> => {
         })
 
         const newTodo: ITodo = await todo.save()
-        const allTodos: ITodo[] = await Todo.find({ creator: req.params.creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
+        const allTodos: ITodo[] = await Todo.find({ creator: req.params.userId }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
 
         res
             .status(201)
@@ -41,16 +41,16 @@ const addTodo = async (req: Request, res: Response): Promise<void> => {
 const updateTodo = async (req: Request, res: Response): Promise<void> => {
     try {
         const {
-            params: { id, creator },
+            params: { todoId, userId },
             body,
         } = req
         const updateTodo: ITodo | null = await Todo.findByIdAndUpdate(
             {
-                _id: id
+                _id: todoId
             },
             body
         )
-        const allTodos: ITodo[] = await Todo.find({ creator: creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
+        const allTodos: ITodo[] = await Todo.find({ creator: userId }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
         res.status(200).json({
             message: "Todo updated",
             todo: updateTodo,
@@ -64,9 +64,9 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
 const deleteTodo = async (req: Request, res: Response): Promise<void> => {
     try {
         const deletedTodo: ITodo | null = await Todo.findByIdAndRemove(
-            req.params.id
+            req.params.todoId
         )
-        const allTodos: ITodo[] = await Todo.find({ creator: req.params.creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
+        const allTodos: ITodo[] = await Todo.find({ creator: req.params.userId }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
         res.status(200).json({
             message: "Todo deleted",
             todo: deletedTodo,
@@ -79,12 +79,12 @@ const deleteTodo = async (req: Request, res: Response): Promise<void> => {
 
 const deleteAllTodos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const deletedTodo: ITodo | null = await Todo.remove(
-            { creator: req.params.creator }
+        const deletedTodo = await Todo.deleteMany(
+            { creator: req.params.userId }
         )
-        const allTodos: ITodo[] = await Todo.find({ creator: req.params.creator }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
+        const allTodos: ITodo[] = await Todo.find({ creator: req.params.userId }).sort({ status: 1, updatedAt: -1, createdAt: -1 })
         res.status(200).json({
-            message: "All Todos deleted",
+            message: "Deleted Todos count: " + deletedTodo.deletedCount,
             todos: allTodos,
         })
     } catch (error) {

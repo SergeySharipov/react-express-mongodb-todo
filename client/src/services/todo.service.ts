@@ -25,7 +25,7 @@ export const getTodos = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const todos: AxiosResponse<ApiDataType> = await axios.get(
-            `${baseUrl}/${currentUserId}/todos`, { headers: authHeader() });
+            `${baseUrl}/user/${currentUserId}/todos`, { headers: authHeader() });
         return todos
     } catch (e) {
         catchUnauthorizedError(e)
@@ -45,7 +45,7 @@ export const addTodo = async (
             creator: currentUserId
         }
         const saveTodo: AxiosResponse<ApiDataType> = await axios.post(
-            `${baseUrl}/${currentUserId}/add-todo`,
+            `${baseUrl}/user/${currentUserId}/todo`,
             todo
             , { headers: authHeader() });
         return saveTodo
@@ -61,7 +61,7 @@ export const updateTodo = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
-            `${baseUrl}/${currentUserId}/edit-todo/${todo.id}`,
+            `${baseUrl}/user/${currentUserId}/todo/${todo.id}`,
             todo
             , { headers: authHeader() });
         return updatedTodo
@@ -77,7 +77,7 @@ export const deleteTodo = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-            `${baseUrl}/${currentUserId}/delete-todo/${id}`
+            `${baseUrl}/user/${currentUserId}/todo/${id}`
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {
@@ -91,7 +91,7 @@ export const deleteAllTodos = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-            `${baseUrl}/${currentUserId}/delete-all-todos/`
+            `${baseUrl}/user/${currentUserId}/todos/`
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {
