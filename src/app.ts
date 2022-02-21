@@ -9,27 +9,10 @@ import path from "path"
 
 const app = express()
 
-const production = 'https://react-todo-list-js.herokuapp.com'
-const development = 'http://localhost:3000'
-const isProduction = process.env.NODE_ENV === "production"
-const url = isProduction ? production : development
+const corsOptions = config.IS_DEV_ENV ? {
+  origin: config.DEV_CLIENT_API_URL
+} : undefined;
 
-if (isProduction) {
-  app.use(function (req, res, next) {
-    var schema = req.headers['x-forwarded-proto'];
-
-    if (schema === 'https') {
-      next();
-    }
-    else {
-      res.redirect('https://' + req.headers.host + req.url);
-    }
-  });
-}
-
-var corsOptions = {
-  origin: url
-};
 app.use(cors(corsOptions));
 // serve static files from the React app
 app.use(express.static(path.join(__dirname, 'build')));
@@ -37,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json())
 // application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
 app.use(requestLogger)
 
 app.use(routes.authRoutes)
@@ -49,14 +33,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/build/index.html'));
 });
 
-log.i('connecting to', config.MONGODB_URI)
+log.i('Connecting to: ', config.MONGODB_URI)
 
 db.mongoose.connect(config.MONGODB_URI)
   .then(() => {
-    log.i('connected to MongoDB')
+    log.i('Connected to MongoDB')
   })
   .catch((error) => {
-    log.e('error connection to MongoDB:', error.message)
+    log.e('Error connecting to MongoDB: ', error.message)
   })
 
 export default app
