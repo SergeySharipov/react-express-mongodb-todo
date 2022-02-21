@@ -2,8 +2,8 @@ import React from "react"
 
 type Props = TodoProps & {
   updateTodo: (todo: ITodo) => void
-  deleteTodo: (_id: string) => void
-  openEditDialog: (_id: string) => void
+  deleteTodo: (id: string) => void
+  openEditDialog: (id: string) => void
 }
 
 const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, openEditDialog }) => {
@@ -27,13 +27,13 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, openEditDialog })
         />
         <span className="Card--checkbox_checkmark" />
       </div>
-      <div className="Card--text" onClick={() => openEditDialog(todo._id)}>
+      <div className="Card--text" onClick={() => openEditDialog(todo.id)}>
         <h2 className={checkTodo}>{todo.name}</h2>
         <span className={checkTodo}>{todo.description}</span>
       </div>
       <div className="Card--button">
         <button
-          onClick={() => deleteTodo(todo._id)}
+          onClick={() => deleteTodo(todo.id)}
           className="Card--button__delete"
         >
           Delete

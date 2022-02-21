@@ -38,7 +38,7 @@ export const addTodo = async (
     formData: AddTodoFormData
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
-        const todo: Omit<ITodo, "_id"> = {
+        const todo: Omit<ITodo, "id"> = {
             name: formData.name,
             description: formData.description,
             status: false,
@@ -61,7 +61,7 @@ export const updateTodo = async (
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
-            `${baseUrl}/${currentUserId}/edit-todo/${todo._id}`,
+            `${baseUrl}/${currentUserId}/edit-todo/${todo.id}`,
             todo
             , { headers: authHeader() });
         return updatedTodo
@@ -73,11 +73,11 @@ export const updateTodo = async (
 
 export const deleteTodo = async (
     currentUserId: string,
-    _id: string
+    id: string
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const deletedTodo: AxiosResponse<ApiDataType> = await axios.delete(
-            `${baseUrl}/${currentUserId}/delete-todo/${_id}`
+            `${baseUrl}/${currentUserId}/delete-todo/${id}`
             , { headers: authHeader() });
         return deletedTodo
     } catch (e) {

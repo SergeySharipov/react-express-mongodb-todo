@@ -34,7 +34,7 @@ const UpdateTodoDialog: React.FC<Props> = ({ todo, updateTodo, cancelEditDialog 
   }
 
   function instanceOfITodo(object: any): object is ITodo {
-    return object !== undefined && '_id' in object;
+    return object !== undefined && 'id' in object;
   }
 
   function isBlank(str: string) {

@@ -59,9 +59,9 @@ const Home: React.FC = () => {
     }
   }
 
-  const handleDeleteTodo = (_id: string): void => {
+  const handleDeleteTodo = (id: string): void => {
     if (currentUserId) {
-      deleteTodo(currentUserId, _id)
+      deleteTodo(currentUserId, id)
         .then(({ status, data }) => {
           if (status !== 200) {
             throw new Error('Error! Todo not deleted')
@@ -72,8 +72,8 @@ const Home: React.FC = () => {
     }
   }
 
-  function handleOpenEditDialog(_id: string) {
-    setEditTodoId(_id);
+  function handleOpenEditDialog(id: string) {
+    setEditTodoId(id);
   }
 
   function cancelEditDialog() {
@@ -105,7 +105,7 @@ const Home: React.FC = () => {
         <AddTodo saveTodo={handleSaveTodo} />
         {todos.map((todo: ITodo) => (
           <TodoItem
-            key={todo._id}
+            key={todo.id}
             updateTodo={handleUpdateTodo}
             deleteTodo={handleDeleteTodo}
             openEditDialog={handleOpenEditDialog}
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
         <UpdateTodoDialog
           todo={
             editTodoId !== ""
-              ? todos.find(todo => todo._id === editTodoId)
+              ? todos.find(todo => todo.id === editTodoId)
               : undefined
           }
           updateTodo={handleUpdateTodo}
