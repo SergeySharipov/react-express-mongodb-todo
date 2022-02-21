@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ]
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
