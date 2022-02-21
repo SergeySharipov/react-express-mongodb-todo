@@ -13,6 +13,10 @@ export interface ITodo extends Document {
   creator: string
 }
 
-export interface IRequest extends Document {
-  userId: string
+declare global {
+  namespace Express {
+    interface Request {
+      userId: string
+    }
+  }
 }

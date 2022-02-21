@@ -15,6 +15,6 @@ router.use(function (req: Request, res: Response, next: NextFunction) {
 
 router.get("/api/test/all", controller.allAccess);
 
-router.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+router.get("/api/test/user/:userId", [authJwt.verifyToken], controller.userBoard);
 
 export default router

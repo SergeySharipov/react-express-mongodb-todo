@@ -1,11 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from "jsonwebtoken";
 import config from "../utils/config";
-import { IRequest } from "../types/types";
-
-function instanceOfIRequest(object: any): object is IRequest {
-    return object !== undefined && 'userId' in object;
-}
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     let token: string | string[] | undefined = req.headers["x-access-token"];
@@ -18,9 +13,13 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
         if (err) {
             return res.status(401).send({ message: "Unauthorized!" });
         }
-        if (decoded != null && typeof decoded !== "string" && instanceOfIRequest(req)) {
+        if (decoded != null && typeof decoded !== "string") {
             req.userId = decoded.id;
         }
+        if (req.params.userId !== req.userId) {
+            return res.status(401).send({ message: "Unauthorized!" });
+        }
+
         next();
     });
 };
