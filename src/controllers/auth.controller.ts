@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import config from "../config/auth.config";
+import config from "../utils/config";
 import db from "../models";
 import { IUser } from '../types/types';
 import Jwt from "jsonwebtoken";
@@ -49,7 +49,7 @@ const signin = (req: Request, res: Response) => {
                 });
             }
 
-            var token = Jwt.sign({ id: user.id }, config.secret, {
+            var token = Jwt.sign({ id: user.id }, config.AUTH_SECRET, {
                 expiresIn: 31556952 // 1 year
             });
 

@@ -13,13 +13,7 @@ router.use(function (req: Request, res: Response, next: NextFunction) {
     next();
 });
 
-router.post(
-    "/api/auth/signup",
-    [
-        verifySignUp.checkDuplicateUsernameOrEmail
-    ],
-    controller.signup
-);
+router.post("/api/auth/signup",[verifySignUp.checkDuplicateUsernameOrEmail],controller.signup);
 
 router.post("/api/auth/signin", controller.signin);
 

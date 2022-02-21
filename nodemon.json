@@ -1,5 +1,7 @@
 {
     "env": {
+        "NODE_ENV": "development",
+        "PORT": "8080",
         "MONGO_USER": "SerjSh",
         "MONGO_PASSWORD": "eZZ0zwOC071lajCL",
         "MONGO_DB": "ToDo"

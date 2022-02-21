@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from "jsonwebtoken";
-import config from "../config/auth.config";
+import config from "../utils/config";
 import { IRequest } from "../types/types";
 
 function instanceOfIRequest(object: any): object is IRequest {
@@ -14,7 +14,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
         return res.status(403).send({ message: "No token provided!" });
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, config.AUTH_SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send({ message: "Unauthorized!" });
         }
