@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import IUser from "../types/user.type";
-import { register } from "../services/auth.service";
+import { login, register } from "../services/auth.service";
+import { RouteComponentProps } from "react-router-dom";
 
-const Register: React.FC = () => {
+interface RouterProps {
+  history: string;
+}
+
+type Props = RouteComponentProps<RouterProps>;
+
+const Register: React.FC<Props> = ({ history }) => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
@@ -40,27 +47,27 @@ const Register: React.FC = () => {
       .required("This field is required!"),
   });
 
-  const handleRegister = (formValue: IUser) => {
+  const handleRegister = async (formValue: IUser) => {
     const { username, email, password } = formValue;
 
-    register(username, email, password).then(
-      (response) => {
-        setMessage(response.data.message);
-        setSuccessful(true);
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    try {
+      await register(username, email, password);
+      await login(username, password);
 
-        setMessage(resMessage);
-        setSuccessful(false);
-      }
-    );
-  };
+      history.push("/");
+      window.location.reload();
+    } catch (error: any) {
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      setMessage(resMessage);
+      setSuccessful(false);
+    }
+  }
 
   return (
     <div className="col-md-12">
