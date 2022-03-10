@@ -5,8 +5,16 @@ import UpdateTodoDialog from './UpdateTodoDialog'
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../services/todo.service'
 import { getCurrentUser } from "../services/auth.service";
 import { Link } from 'react-router-dom'
+import { login, register } from "../services/auth.service";
+import { RouteComponentProps } from "react-router-dom";
 
-const Home: React.FC = () => {
+interface RouterProps {
+  history: string;
+}
+
+type Props = RouteComponentProps<RouterProps>;
+
+const Home: React.FC<Props> = ({ history }) => {
   const [todos, setTodos] = useState<ITodo[]>([])
   const [editTodoId, setEditTodoId] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -82,6 +90,19 @@ const Home: React.FC = () => {
     }
   }
 
+  const demoLogin = async () => {
+    const dateStr = Date.now();
+    const username = `Test${dateStr}`;
+    const email = `${dateStr}@test.ca`;
+    const password = `${dateStr}`;
+
+    await register(username, email, password);
+    await login(username, password);
+
+    history.push("/");
+    window.location.reload();
+  }
+
   return (
     <div className="container">
       {!currentUserId && <div className='unauthorised'>
@@ -89,13 +110,15 @@ const Home: React.FC = () => {
           <div className="card card-container">
             <h1>Welcome</h1>
             <div className="form-group">
-              <Link to={"/login"} className="btn btn-primary btn-block">
+              <Link to={"/login"} className="btn btn-primary btn-block mb-3">
                 Login
               </Link>
-              <h3>Or</h3>
-              <Link to={"/register"} className="btn btn-secondary btn-block">
+              <Link to={"/register"} className="btn btn-secondary btn-block mb-3">
                 Sign Up
               </Link>
+              <button onClick={demoLogin} className="btn btn-primary btn-block">
+                <span>Demo Login</span>
+              </button>
             </div>
           </div>
         </div>
