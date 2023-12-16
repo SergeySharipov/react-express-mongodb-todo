@@ -124,7 +124,7 @@ const Home: React.FC<Props> = ({ history }) => {
         </div>
       </div>}
       {currentUserId && <div className='todoApp'>
-        <h1>My Todos</h1>
+        <h1>My Tasks</h1>
         <AddTodo saveTodo={handleSaveTodo} />
         {todos.map((todo: ITodo) => (
           <TodoItem

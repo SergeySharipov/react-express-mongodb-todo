@@ -38,14 +38,14 @@ const AddTodo: React.FC<Props> = ({ saveTodo }) => {
   return (
     <form className='Form' onSubmit={handleSubmit}>
       <div>
-        <label htmlFor='name'>Name</label>
+        <label htmlFor='name'>Title</label>
         <input onChange={handleForm} value={formData.name} type='text' id='name' />
       </div>
       <div>
         <label htmlFor='description'>Description</label>
         <input onChange={handleForm} value={formData.description} type='text' id='description' />
       </div>
-      <button disabled={formData === undefined ? true : false} >Add Todo</button>
+      <button disabled={formData === undefined ? true : false} >Add</button>
     </form>
   )
 }

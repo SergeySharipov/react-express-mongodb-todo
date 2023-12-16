@@ -27,9 +27,14 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo, openEditDialog })
         />
         <span className="Card--checkbox_checkmark" />
       </div>
-      <div className="Card--text" onClick={() => openEditDialog(todo.id)}>
+      <div className="Card--text">
         <h2 className={checkTodo}>{todo.name}</h2>
         <span className={checkTodo}>{todo.description}</span>
+      </div>
+      <div className="Card--button">
+        <button onClick={() => openEditDialog(todo.id)}>
+          Update
+        </button>
       </div>
       <div className="Card--button">
         <button
