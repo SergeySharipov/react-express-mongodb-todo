@@ -41,7 +41,7 @@ const Profile: React.FC<Props> = ({ history }) => {
           <strong>Email:</strong> {currentUser.email}
         </p>
         <button className="btn btn-danger btn-block" onClick={handleDeleteTodos}>
-          <span>Delete All Todos</span>
+          <span>Delete All Tasks</span>
         </button>
       </div>
     </div>

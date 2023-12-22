@@ -51,7 +51,7 @@ const UpdateTodoDialog: React.FC<Props> = ({ todo, updateTodo, cancelEditDialog 
       <form className='Form' onSubmit={handleSubmit}>
         <div>
           <div>
-            <label htmlFor='name'>Name</label>
+            <label htmlFor='name'>Title</label>
             <input onChange={handleForm} type='text' id='name' value={instanceOfITodo(formData) ? formData.name : ""} />
           </div>
           <div>

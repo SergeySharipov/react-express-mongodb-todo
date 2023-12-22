@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "build": "tsc && cd client && npm install && npm run build && cd .. && mv client/build/ dist/build",
+    "build": "tsc && cd client && npm install && npm run build && cd .. && mv client/build/ dist/build && rm -r client",
     "start": "node dist/index.js",
     "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\" \"cd client && npm start\""
   },
